@@ -51,7 +51,7 @@ function deepMergeUpdates(new_obj,orig) {
             mut[i] = M(n[i],o[i]);
           } else {
             let newc = M(n[i],o[i]);
-            if(newc !== n[i]) {
+            if(newc !== o[i]) {
               mut = n.concat();
               mut[i] = newc;
             }
