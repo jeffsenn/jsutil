@@ -52,7 +52,7 @@ function deepMergeUpdates(new_obj,orig) {
           } else {
             let newc = M(n[i],o[i]);
             if(newc !== o[i]) {
-              mut = n.concat();
+              mut = o.slice(0,n.length);
               mut[i] = newc;
             }
           }
