@@ -104,7 +104,7 @@ Null = deepFreeze({"":["Null"]}); //NOT js 'null'
 
 class Binary {
   constructor(data) { //from
-    if(isSpecial(uus) == "Binary") {
+    if(isSpecial(data) == "Binary") {
       data = data[""][1];
     } else if(!isString(data)) {
       throw Error("TBD: non base64 data");
@@ -270,6 +270,14 @@ function asNumber(a) {
   return x === null ? NaN : +a; //was: Number(a);
 }
 
+var classByName = {'UUID':UUID, 'Binary':Binary};
+function parseJSON(a) {
+  return JSON.parse(a,function(k,v) {
+    var c;
+    return (v[''] && (c = classByName[v[''][0]]) && Object.keys(v).length == 1) ? (new c(v)) : v;
+  });
+};
+
 module.exports = {
   isSpecial,
   isString,
@@ -278,6 +286,7 @@ module.exports = {
   deepFreeze,
   stringifyKeysInOrder,
   orderedJSON,
+  parseJSON,
   deepMergeUpdates,
   UTF8ArrayToStr,
   toUTF8Array,
