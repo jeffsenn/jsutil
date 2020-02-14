@@ -78,7 +78,6 @@ function deepMergeUpdates(new_obj,orig) {
 }
 
 function deepFreeze (o) {
-  Object.freeze(o);
   Object.getOwnPropertyNames(o).forEach(function (prop) {
     if (o.hasOwnProperty(prop)
         && o[prop] !== null
@@ -87,6 +86,7 @@ function deepFreeze (o) {
       deepFreeze(o[prop]);
     }
   });
+  Object.freeze(o);
   return o;
 };
 
@@ -278,12 +278,31 @@ function parseJSON(a) {
   });
 };
 
+function deepFreezeAndClassify (o) {
+  var p = Object.getOwnPropertyNames(o);
+  p.forEach(function (prop) {
+    if (o.hasOwnProperty(prop)
+        && o[prop] !== null
+        && (typeof o[prop] === "object" || typeof o[prop] === "function")
+        && !Object.isFrozen(o[prop])) {
+      deepFreezeAndClassify(o[prop]);
+    }
+  });
+  if(p.length === 1 && p[0] === '' && Array.isArray(o[''])) {
+    var c = classByName[o[''][0]];
+    if(c && o.__proto__ === Object.prototype) o.__proto__ = c.prototype;    
+  }
+  Object.freeze(o);
+  return o;
+};
+
 module.exports = {
   isSpecial,
   isString,
   UUID,
   Binary,
   deepFreeze,
+  deepFreezeAndClassify,
   stringifyKeysInOrder,
   orderedJSON,
   parseJSON,
