@@ -332,3 +332,9 @@ module.exports = {
   asString,
   asNumber
 };
+
+test = deepFreezeAndClassify({foo: 4, foo1: { bar: {a : [1,2,3], b: 2}}})
+console.log(JSON.stringify(deepEdit(test, ["foo1","bar","c","1"], 5)))
+test.foo1.bar.a[1]= 5
+console.log(JSON.stringify(test))
+//console.log(deepMergeUpdates({foo:{ bar: { a: 1 }}}, 

@@ -1,6 +1,6 @@
 {
   "name": "@senn/jsutil",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Utilities for managing JS objects",
   "main": "index.js",
   "scripts": {
