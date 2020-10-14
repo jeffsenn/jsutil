@@ -113,7 +113,7 @@ function isString(myVar) {
 }
 
 function isSpecial(a) {
-  return (a[""] && Object.keys(a).length == 1) ? a[""][0] : undefined;
+  return (a && a[""] && Object.keys(a).length == 1) ? a[""][0] : undefined;
 }
 
 ErrTok = deepFreeze({"":["ErrTok"]});
