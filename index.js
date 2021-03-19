@@ -1,5 +1,4 @@
 //var Base64 = require('js-base64').Base64;
-
 function recursivelyOrderKeys(unordered) {
   if (Array.isArray(unordered)) {
     unordered.forEach(function (item, index) {
@@ -122,7 +121,7 @@ Null = deepFreeze({"":["Null"]}); //NOT js 'null'
 
 class Binary {
   constructor(data) { //from
-    if(isSpecial(data) == "Binary") {
+    if(isSpecial(data) === "Binary") {
       data = data[""][1];
     } else if(!isString(data)) {
       throw Error("TBD: non base64 data");
@@ -130,15 +129,45 @@ class Binary {
     this[""] = ["Binary",data];
     deepFreeze(this);
   }
-  static isa(uu) {
-    return isSpecial(uu) == "Binary";
+  static isa(x) {
+    return isSpecial(x) === "Binary";
   }
+}
+
+function isValidDate(date) {
+  return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date);
+}
+
+//named to not conflict with internal Date
+class DateValue {
+  constructor(data) { //from
+    if(data === undefined) {
+      data = (new Date()).toISOString()
+    } else if(isSpecial(data) === "Date") {
+      data = data[""][1];
+    } else if(isValidDate(data)) {
+      data = data.toISOString()
+    } else {
+      const d = new Date(data)
+      if(isNaN(d)) throw Error("not convertable to date")
+      //big question: should this be ISO format?
+      //data = d.toISOString()
+    }
+    this[""] = ["Date",data];
+    deepFreeze(this);
+  }
+  toDate() {
+    return new Date(this[""][1]);
+  }
+  static isa(x) {
+    return isSpecial(x) === "Date";
+  }
+  
 }
 
 //TODO for vsmf
 //class MimeVal
 //class MimeVal2
-//class Date
 //class Quantity
 //class Ratio
 //class UForm
@@ -288,7 +317,7 @@ function asNumber(a) {
   return x === null ? NaN : +a; //was: Number(a);
 }
 
-var classByName = {'UUID':UUID, 'Binary':Binary};
+var classByName = {'UUID':UUID, 'Binary':Binary, 'Date':DateValue};
 function parseJSON(a) {
   return JSON.parse(a,function(k,v) {
     var c;
@@ -330,5 +359,7 @@ module.exports = {
   UTF8ArrayToStr,
   toUTF8Array,
   asString,
-  asNumber
+  asNumber,
+  DateValue,
+  isValidDate
 };
