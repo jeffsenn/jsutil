@@ -4,12 +4,15 @@
   "description": "Utilities for managing JS objects",
   "main": "index.js",
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "npmpublish": "npm publish --access=public"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "npmpublish": "npm publish --access=public"
+  },
+  "dependencies": {
+    "jsep": "^0.4.0"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/jeffsenn/jsutil.git"
+    "type": "git",
+    "url": "https://github.com/jeffsenn/jsutil.git"
   },
   "author": "Jeff Senn <jeffsenn@gmail.com>",
   "license": "MIT"
