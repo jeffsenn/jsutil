@@ -1,16 +1,38 @@
 {
   "name": "@senn/jsutil",
-  "version": "1.0.10",
+  "version": "1.1.2",
   "description": "Utilities for managing JS objects",
-  "main": "index.js",
+  "main": "dist/bundle.js",
+  "module": "dist/index.mjs",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "npmpublish": "npm publish --access=public"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run build",
+    "npmpublish": "npm publish --access=public",
+    "build": "rollup -c rollup.config.js && rollup -c rollup-min.config.js && rollup -c rollup-esm.config.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "dependencies": {
+    "jsep": "^0.4.0"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/jeffsenn/jsutil.git"
+    "type": "git",
+    "url": "https://github.com/jeffsenn/jsutil.git"
   },
+  "keywords": [
+    "vsmf",
+    "visage",    
+    "grql"
+  ],
   "author": "Jeff Senn <jeffsenn@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.2",
+    "rollup": "^2.53.2",
+    "rollup-plugin-babel": "^4.4.0"
+  }
 }
