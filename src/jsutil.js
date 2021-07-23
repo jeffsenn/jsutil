@@ -116,9 +116,9 @@ function isSpecial(a) {
   return (a && a[""] && Object.keys(a).length == 1) ? a[""][0] : undefined;
 }
 
-ErrTok = deepFreeze({ "": ["ErrTok"] });
+const ErrTok = deepFreeze({ "": ["ErrTok"] });
 
-Null = deepFreeze({ "": ["Null"] }); //NOT js 'null'
+const Null = deepFreeze({ "": ["Null"] }); //NOT js 'null'
 
 class Binary {
   constructor(data) { //from
@@ -415,6 +415,8 @@ export default {
   isSpecial,
   isString,
   UUID,
+  ErrTok,
+  Null,
   Binary,
   deepEdit,
   deepFreeze,
